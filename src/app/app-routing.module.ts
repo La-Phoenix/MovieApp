@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashBoardComponent } from './Components/DashBoard/dashboard.component';
 import { MovieItemComponent } from './Components/MovieItem/movieitem.component';
+import { PotentialMovies } from './Components/PotentialMovie/potentialmovie.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -9,6 +10,10 @@ const routes: Routes = [
   {
     path: 'movie',
     children: [
+      {
+        path: 'search',
+        component: PotentialMovies,
+      },
       {
         path: ':id',
         component: MovieItemComponent,

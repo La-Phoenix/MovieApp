@@ -46,7 +46,7 @@ export class DashBoardComponent implements OnInit {
   getPopularMovies(): void {
     this.dataService.getPopularMovies().subscribe({
       next: (data) => {
-        this.popularMovies = this.modifyData(data);
+        this.popularMovies = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;
@@ -54,26 +54,10 @@ export class DashBoardComponent implements OnInit {
     });
   }
 
-  modifyData(movies: Movie): Movie {
-    if (movies.results) {
-      movies.results.forEach((element) => {
-        element.backdrop_path =
-          'https://image.tmdb.org/t/p/original' +
-          element.backdrop_path +
-          '?api_key=' +
-          environment.api_key;
-        if (!element.title) {
-          element.title = element?.name;
-        }
-      });
-    }
-    return movies;
-  }
-
   getNowPlayingMovies(): void {
     this.dataService.getNowPlayingMovies().subscribe({
       next: (data) => {
-        this.nowPlayingMovies = this.modifyData(data);
+        this.nowPlayingMovies = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;
@@ -83,7 +67,7 @@ export class DashBoardComponent implements OnInit {
   getTopRatedMovies(): void {
     this.dataService.getTopRated().subscribe({
       next: (data) => {
-        this.topRatedMovies = this.modifyData(data);
+        this.topRatedMovies = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;
@@ -93,7 +77,7 @@ export class DashBoardComponent implements OnInit {
   getUpcomingMovies(): void {
     this.dataService.getUpcoming().subscribe({
       next: (data) => {
-        this.upcomingMovies = this.modifyData(data);
+        this.upcomingMovies = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;
@@ -103,7 +87,7 @@ export class DashBoardComponent implements OnInit {
   getTrendingMovies(): void {
     this.dataService.getTrendingMovies().subscribe({
       next: (data) => {
-        this.trendingMovies = this.modifyData(data);
+        this.trendingMovies = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;
@@ -113,7 +97,7 @@ export class DashBoardComponent implements OnInit {
   getOriginals(): void {
     this.dataService.getOriginals().subscribe({
       next: (data) => {
-        this.originals = this.modifyData(data);
+        this.originals = this.dataService.modifyData(data);
       },
       error: (err) => {
         this.error = err;

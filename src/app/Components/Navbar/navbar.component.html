@@ -16,13 +16,13 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLink="dashboard"
-            >Home</a
+            >Movies</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="#">Tv Shows</a>
         </li>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             href="#"
@@ -41,16 +41,17 @@
         </li>
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
-        </li>
+        </li> -->
       </ul>
-      <form class="d-flex" role="search">
+      <form class="d-flex" [formGroup]="form" (submit)="searchMovie()">
         <input
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
+          formControlName="search"
         />
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="btn btn-outline-success">Search</button>
       </form>
     </div>
   </div>
