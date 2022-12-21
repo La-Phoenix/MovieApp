@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Movie, ResultsEntity } from 'src/app/Model/movie';
 import { environment } from 'src/environments/environment';
@@ -10,7 +11,11 @@ const url: string = 'https://api.themoviedb.org/3/';
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   getMovie(id: string): Observable<any> {
     return this.http.get(
@@ -62,34 +67,34 @@ export class DataService {
     );
   }
 
-  getPopularMovies(): Observable<any> {
+  getPopularMovies(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'movie/popular?api_key=' + environment.api_key
+      url + 'movie/popular?api_key=' + environment.api_key + '&page=' + page
     );
   }
-  getNowPlayingMovies(): Observable<any> {
+  getNowPlayingMovies(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'movie/now_playing?api_key=' + environment.api_key
+      url + 'movie/now_playing?api_key=' + environment.api_key + '&page=' + page
     );
   }
-  getTopRated(): Observable<any> {
+  getTopRated(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'movie/top_rated?api_key=' + environment.api_key
+      url + 'movie/top_rated?api_key=' + environment.api_key + '&page=' + page
     );
   }
-  getUpcoming(): Observable<any> {
+  getUpcoming(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'movie/upcoming?api_key=' + environment.api_key
+      url + 'movie/upcoming?api_key=' + environment.api_key + '&page=' + page
     );
   }
-  getTrendingMovies(): Observable<any> {
+  getTrendingMovies(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'trending/all/week?api_key=' + environment.api_key
+      url + 'trending/all/week?api_key=' + environment.api_key + '&page=' + page
     );
   }
-  getOriginals(): Observable<any> {
+  getOriginals(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'discover/tv?api_key=' + environment.api_key
+      url + 'discover/tv?api_key=' + environment.api_key + '&page=' + page
     );
   }
   // search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
@@ -98,5 +103,34 @@ export class DataService {
     return this.http.get(
       `${url}search/movie?query=${search}&api_key=${environment.api_key}&language=en-US&page=1&include_adult=false`
     );
+  }
+
+  nextPage(
+    page: number,
+    routePage: number,
+    pageTitle: string,
+    next?: boolean,
+    previous?: boolean
+  ): void {
+    if (next) {
+      if (!routePage) {
+        routePage = 1;
+      }
+      routePage++;
+      page = routePage;
+    }
+    if (previous && routePage) {
+      routePage--;
+      page = routePage;
+    }
+    if (page > 0) {
+      this.router.navigateByUrl('movie/' + pageTitle + '?page=' + page);
+    }
+    // document
+    //   .querySelectorAll('.page-link')
+    //   .forEach((el) => (el.className = 'page-link'));
+    // if (document.getElementById(page?.toString())) {
+    //   document.getElementById(page?.toString())!.className = 'active page-link';
+    // }
   }
 }
