@@ -33,24 +33,50 @@
           </a>
           <ul class="dropdown-menu">
             <li>
-              <a class="dropdown-item" routerLink="movie/popular">Popular</a>
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/popular"
+                >Popular</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="movie/topRated">Top Rated</a>
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/topRated"
+                >Top Rated</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="movie/nowPlaying"
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/nowPlaying"
                 >Now Playing</a
               >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="movie/trending">Trending</a>
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/trending"
+                >Trending</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="movie/upcoming">Upcoming</a>
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/upcoming"
+                >Upcoming</a
+              >
             </li>
             <li>
-              <a class="dropdown-item" routerLink="movie/originals"
+              <a
+                class="dropdown-item"
+                routerLinkActive="active"
+                routerLink="movie/originals"
                 >Originals</a
               >
             </li>
@@ -61,7 +87,6 @@
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
-            href="#"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -92,6 +117,9 @@
               >
             </li>
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboard#contact">Contact</a>
         </li>
       </ul>
       <form class="d-flex" [formGroup]="form" (submit)="searchMovie()">

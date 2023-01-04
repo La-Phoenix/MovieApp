@@ -10,7 +10,7 @@ import { DataService } from 'src/app/Services/Data/data.service';
 })
 export class TrendingComponent implements OnInit {
   trending!: ResultsEntity[];
-  page: number = 1;
+  page: number | undefined;
   isLoading = true;
 
   constructor(
@@ -23,6 +23,9 @@ export class TrendingComponent implements OnInit {
     this.route.queryParams.subscribe({
       next: (params) => {
         this.page = params['page'];
+        if (!this.page) {
+          this.page = 1;
+        }
         this.getTrending();
       },
       error: (err) => console.log(err),

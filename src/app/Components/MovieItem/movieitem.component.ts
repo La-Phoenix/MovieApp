@@ -11,6 +11,8 @@ import { DataService } from 'src/app/Services/Data/data.service';
 export class MovieItemComponent implements OnInit {
   param!: string;
   movie!: ResultsEntity;
+  isLoading = true;
+  video: any | undefined
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +25,7 @@ export class MovieItemComponent implements OnInit {
         console.log(params['id']);
         this.param = params['id'];
         this.getMovie();
+        this.watchMovie()
       },
       error: (err) => {
         console.log(err);
@@ -30,11 +33,23 @@ export class MovieItemComponent implements OnInit {
     });
   }
 
+  watchMovie(): void{
+    this.dataService.watchMovie(this.param).subscribe({
+      next: (data) => {
+        console.log(data)
+        this.video = data
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
   getMovie(): void {
     this.dataService.getMovie(this.param).subscribe({
       next: (data) => {
         this.movie = this.dataService.changeData(data);
         console.log(this.movie);
+        this.isLoading = false;
       },
       error: (err) => {
         console.log(err);

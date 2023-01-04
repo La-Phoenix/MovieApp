@@ -1,4 +1,7 @@
-<div class="container-fluid bg-dark" *ngIf="potentialMovies">
+<ng-container *ngIf="isLoading">
+  <app-loading></app-loading>
+</ng-container>
+<div class="container-fluid bg-dark" *ngIf="potentialMovies && !isLoading">
   <div class="div" *ngFor="let movie of potentialMovies">
     <div
       class="row m-3 p-3 bg-dark"
@@ -42,5 +45,57 @@
         </p>
       </div>
     </div>
+  </div>
+  <div class="pag">
+    <nav aria-label="Top Rated Movies">
+      <ul class="pagination">
+        <li class="page-item">
+          <a
+            [ngClass]="page! < 2 ? 'page-link disabled' : 'page-link'"
+            style="cursor: pointer"
+            (click)="nextPage(page!, false, true)"
+            >Previous</a
+          >
+        </li>
+        <li class="page-item">
+          <a
+            [ngClass]="
+              page?.toString() === '1' ? 'page-link disabled' : 'page-link'
+            "
+            style="cursor: pointer"
+            (click)="nextPage(1)"
+            >1</a
+          >
+        </li>
+        <li class="page-item" aria-current="page">
+          <a
+            [ngClass]="
+              page?.toString() === '2' ? 'page-link disabled' : 'page-link'
+            "
+            style="cursor: pointer"
+            (click)="nextPage(2)"
+            >2</a
+          >
+        </li>
+        <li class="page-item">
+          <a
+            [ngClass]="
+              page?.toString() === '3' ? 'page-link disabled' : 'page-link'
+            "
+            style="cursor: pointer"
+            (click)="nextPage(3)"
+            >3</a
+          >
+        </li>
+        <li class="page-item">
+          <a
+            class="page-link"
+            style="cursor: pointer"
+            (click)="nextPage(page!, true)"
+            >Next</a
+          >
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>

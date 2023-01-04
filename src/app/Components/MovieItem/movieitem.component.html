@@ -1,3 +1,6 @@
+<ng-container *ngIf="isLoading">
+  <app-loading></app-loading>
+</ng-container>
 <div class="container-fluid w-100 p-0 m-0" style="background-color: #424242">
   <div class="row m-3 p-3 bg-dark" *ngIf="movie">
     <div class="col-5">
@@ -23,9 +26,38 @@
       class="col-7 text-white d-flex justify-content-evenly"
       style="background-color: #424242; flex-direction: column"
     >
-      <h5>{{ movie.title }}</h5>
+      <h4>
+        Source:
+        <span
+          ><a
+            href="https://www.themoviedb.org/"
+            class="text-warning"
+            style="text-decoration: none"
+            >TMDB</a
+          ></span
+        >
+      </h4>
+      <h5 class="text-danger">{{ movie.title }}</h5>
       <p>{{ movie.overview }}</p>
       <p><span class="text-warning">Rating</span>: {{ movie.vote_average }}</p>
+      <p>
+        <a
+          href="https://www.justwatch.com/"
+          style="text-decoration: none; margin-right: 0.5rem"
+        >
+          <span class="text-warning">JustWatch(Source): </span>
+        </a>
+        <i *ngIf="!video?.results?.AD?.link" class="text-primary"
+          >Watch link not available</i
+        >
+        <a
+          *ngIf="video?.results?.AD?.link"
+          href="{{ video?.results.AD.link }}"
+          class="text-primary"
+        >
+          Watch Movie</a
+        >
+      </p>
       <p style="text-align: bottom">
         Language :
         <span class="p-1" style="background-color: #424242"

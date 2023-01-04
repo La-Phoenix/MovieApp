@@ -18,13 +18,13 @@ export class DashBoardComponent implements OnInit {
   trendingMovies!: Movie;
   originals!: Movie;
   error!: any;
+  isLoading = true;
 
   constructor(private dataService: DataService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getLatestMovie();
-    this.getPopularMovies();
     this.getNowPlayingMovies();
+    this.getPopularMovies();
     this.getTopRatedMovies();
     this.getUpcomingMovies();
     this.getTrendingMovies();
@@ -34,7 +34,12 @@ export class DashBoardComponent implements OnInit {
   getLatestMovie(): void {
     this.dataService.getLatestMovie().subscribe({
       next: (data) => {
-        this.latestMovie = this.dataService.changeData(data);
+        const _latestMovie = this.dataService.changeData(data);
+        if (!_latestMovie.poster_path) {
+          this.latestMovie = this.nowPlayingMovies.results![0];
+        } else {
+          this.latestMovie = _latestMovie;
+        }
         console.log(this.latestMovie);
       },
       error: (err) => {
@@ -58,6 +63,7 @@ export class DashBoardComponent implements OnInit {
     this.dataService.getNowPlayingMovies().subscribe({
       next: (data) => {
         this.nowPlayingMovies = this.dataService.modifyData(data);
+        this.getLatestMovie();
       },
       error: (err) => {
         this.error = err;
@@ -85,9 +91,10 @@ export class DashBoardComponent implements OnInit {
     });
   }
   getTrendingMovies(): void {
-    this.dataService.getTrendingMovies().subscribe({
+    this.dataService.getTrendingMovies(1).subscribe({
       next: (data) => {
         this.trendingMovies = this.dataService.modifyData(data);
+        console.log(this.trendingMovies);
       },
       error: (err) => {
         this.error = err;
@@ -98,6 +105,7 @@ export class DashBoardComponent implements OnInit {
     this.dataService.getOriginals().subscribe({
       next: (data) => {
         this.originals = this.dataService.modifyData(data);
+        this.isLoading = false;
       },
       error: (err) => {
         this.error = err;
@@ -106,7 +114,8 @@ export class DashBoardComponent implements OnInit {
   }
 
   onMovieClick(movie: any): void {
-    console.log(movie);
+    // console.log(movie);
+    this.isLoading = true;
     this.router.navigateByUrl('movie/' + movie.id);
   }
 }

@@ -23,6 +23,9 @@ export class PopularComponent implements OnInit {
     this.route.queryParams.subscribe({
       next: (params) => {
         this.page = params['page'];
+        if (!this.page) {
+          this.page = 1;
+        }
         this.getPopularMovies();
       },
       error: (err) => console.log(err),

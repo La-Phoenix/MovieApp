@@ -23,7 +23,9 @@ export class OriginalsComponent implements OnInit {
     this.route.queryParams.subscribe({
       next: (params) => {
         this.page = params['page'];
-
+        if (!this.page) {
+          this.page = 1;
+        }
         this.getOriginalMovies();
       },
       error: (err) => console.log(err),

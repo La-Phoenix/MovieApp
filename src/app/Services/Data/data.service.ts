@@ -17,6 +17,13 @@ export class DataService {
     private router: Router
   ) {}
 
+  // https://api.themoviedb.org/3/movie/{movie_id}/watch/providers?api_key=<<api_key>>
+  watchMovie(id: string): Observable<ResultsEntity> {
+    return this.http.get<ResultsEntity>(
+      `${url}movie/${id}/watch/providers?api_key=${environment.api_key}`
+    );
+  }
+
   getMovie(id: string): Observable<any> {
     return this.http.get(
       url + `movie/${id}?api_key=${environment.api_key}&language=en-US)`
@@ -84,7 +91,7 @@ export class DataService {
   }
   getUpcoming(page?: number): Observable<any> {
     return this.http.get<any>(
-      url + 'movie/upcoming?api_key=' + environment.api_key + '&page=' + page
+      ` ${url}movie/upcoming?api_key=${environment.api_key}&page=${page || 1}`
     );
   }
   getTrendingMovies(page?: number): Observable<any> {
@@ -99,9 +106,9 @@ export class DataService {
   }
   // search/movie?api_key=<<api_key>>&language=en-US&page=1&include_adult=false
 
-  searchMovie(search: string): Observable<any> {
+  searchMovie(search: string, page?: number): Observable<any> {
     return this.http.get(
-      `${url}search/movie?query=${search}&api_key=${environment.api_key}&language=en-US&page=1&include_adult=false`
+      `${url}search/movie?query=${search}&api_key=${environment.api_key}&language=en-US&page=${page}&include_adult=false`
     );
   }
 
@@ -110,7 +117,8 @@ export class DataService {
     routePage: number,
     pageTitle: string,
     next?: boolean,
-    previous?: boolean
+    previous?: boolean,
+    search?: boolean
   ): void {
     if (next) {
       if (!routePage) {
@@ -123,8 +131,11 @@ export class DataService {
       routePage--;
       page = routePage;
     }
-    if (page > 0) {
+    if (page > 0 && !search) {
       this.router.navigateByUrl('movie/' + pageTitle + '?page=' + page);
+    }
+    if (page > 0 && search) {
+      this.router.navigateByUrl(pageTitle + '&page=' + page);
     }
     // document
     //   .querySelectorAll('.page-link')

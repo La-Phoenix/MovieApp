@@ -23,7 +23,9 @@ export class TopRatedComponent implements OnInit {
     this.route.queryParams.subscribe({
       next: (params) => {
         this.page = params['page'];
-
+        if (!this.page) {
+          this.page = 1;
+        }
         this.getTopRated();
       },
       error: (err) => console.log(err),

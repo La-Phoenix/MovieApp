@@ -1,0 +1,45 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10rem;
+  background-color: rgb(55, 54, 54);
+  border-radius: 20px 20px 0 0;
+}
+
+.link-item {
+  font-size: 18px;
+  line-height: 30px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 16px;
+  transition: 0.3s ease;
+  position: relative;
+  left: 0;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+    left: 6px;
+  }
+}
+
+.link-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.icons {
+  margin: auto 0;
+  margin-left: auto;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 10%;
+  height: 50%;
+}

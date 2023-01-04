@@ -1,4 +1,10 @@
-<div class="container-fluid p-0 m-0 bg-dark">
+<ng-container *ngIf="isLoading">
+  <app-loading></app-loading>
+</ng-container>
+<div
+  class="container-fluid p-0 m-0 bg-dark"
+  style="padding-bottom: 3rem !important"
+>
   <!-- Latest Movie -->
   <div
     *ngIf="latestMovie"
@@ -6,7 +12,7 @@
     class="carousel carousel-dark slide"
     data-bs-ride="carousel"
     (click)="onMovieClick(latestMovie)"
-    style="cursor: pointer"
+    style="cursor: pointer; margin-top: 3rem"
   >
     <div class="carousel-inner text-white">
       <div class="carousel-item active">
@@ -23,10 +29,10 @@
   <!-- Trending Movie -->
 
   <div class="row mt-3 pt-3 px-2 text-white">
-    <h4>Trending</h4>
+    <h4>Popular</h4>
     <div
       class="col-md-2 mt-3 movieCard"
-      *ngFor="let movie of trendingMovies?.results; let i = index"
+      *ngFor="let movie of popularMovies?.results; let i = index"
       (click)="onMovieClick(movie)"
       style="cursor: pointer"
     >
@@ -53,7 +59,10 @@
   </div>
 
   <!-- TopRated -->
-  <div class="row mt-3 pt-3 px-2 text-white" style="background-color: #424242">
+  <div
+    class="row mt-3 pt-3 px-2 text-white"
+    style="background-color: #424242; border-radius: 35px"
+  >
     <h4>Top Rated</h4>
     <div
       class="col-md-2 mt-3"
@@ -115,7 +124,10 @@
   </div>
 
   <!-- Trending -->
-  <div class="row mt-3 pt-3 px-2 text-white" style="background-color: #424242">
+  <div
+    class="row mt-3 pt-3 px-2 text-white"
+    style="background-color: #424242; border-radius: 35px"
+  >
     <h4>Trending Movies</h4>
     <div
       class="col-md-2 mt-3"
@@ -177,7 +189,10 @@
   </div>
 
   <!-- Upcoming -->
-  <div class="row mt-3 pt-3 px-2 text-white" style="background-color: #424242">
+  <div
+    class="row mt-3 pt-3 px-2 text-white"
+    style="background-color: #424242; margin-bottom: 10rem; border-radius: 35px"
+  >
     <h4>UpComing</h4>
     <div
       class="col-md-2 mt-3"

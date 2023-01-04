@@ -16,6 +16,9 @@ import { TopRatedComponent } from './Components/TopRated/topRated.component';
 import { TrendingComponent } from './Components/Trending/trending.component';
 import { UpcomingComponent } from './Components/Upcoming/upcoming.component';
 import { LoadingComponent } from './UIElements/loading/loading.component';
+import { UrlSerializer } from '@angular/router';
+import { CustomUrlSerializer } from './URL_Serializer/customUrlSerializer';
+import { FooterComponent } from './UIElements/Footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { LoadingComponent } from './UIElements/loading/loading.component';
     TopRatedComponent,
     TrendingComponent,
     UpcomingComponent,
-    LoadingComponent
+    LoadingComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,7 @@ import { LoadingComponent } from './UIElements/loading/loading.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{ provide: UrlSerializer, useClass: CustomUrlSerializer }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

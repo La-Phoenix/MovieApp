@@ -10,6 +10,9 @@ import { DataService } from 'src/app/Services/Data/data.service';
 })
 export class PotentialMovies implements OnInit {
   potentialMovies!: ResultsEntity[];
+  isLoading = true;
+  page: number | undefined;
+  search: '' | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,18 +21,24 @@ export class PotentialMovies implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(({ query }) => {
-      console.log(query);
+    this.route.queryParams.subscribe(({ query, page }) => {
+      // console.log(query);
+      this.search = query;
+      this.page = page;
+      if (!page) {
+        this.page = 1;
+      }
       this.searchMovie(query);
     });
   }
 
   searchMovie(search: string): void {
-    this.dataService.searchMovie(search).subscribe({
+    this.dataService.searchMovie(search, this.page).subscribe({
       next: (data) => {
-        console.log(data);
+        // console.log(data);
         this.potentialMovies = this.dataService.modifyData(data).results;
-        console.log(this.potentialMovies);
+        // console.log(this.potentialMovies);
+        this.isLoading = false;
       },
       error: (error) => {
         console.log(error);
@@ -40,5 +49,30 @@ export class PotentialMovies implements OnInit {
   onMovieClick(movie: any): void {
     console.log(movie);
     this.router.navigateByUrl('movie/' + movie.id);
+  }
+
+  nextPage(page: number, next?: boolean, previous?: boolean): void {
+    if (next || previous) {
+      this.isLoading = true;
+      this.dataService.nextPage(
+        page,
+        this.page!,
+        `movie/search?query=${this.search}`,
+        next,
+        previous,
+        true
+      );
+    }
+    if (page.toString() !== this.page?.toString()) {
+      this.isLoading = true;
+      this.dataService.nextPage(
+        page,
+        this.page!,
+        `movie/search?query=${this.search}`,
+        next,
+        previous,
+        true
+      );
+    }
   }
 }
